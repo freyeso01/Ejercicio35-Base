@@ -15,7 +15,6 @@ public class ControlJuego {
 	private final static int MINA = -1;
 	final int MINAS_INICIALES = 20;
 	final int LADO_TABLERO = 10;
-
 	private int[][] tablero;
 	private int puntuacion;
 
@@ -52,21 +51,36 @@ public class ControlJuego {
 		for (int i = 0; i < 100; i++) {
 			posiciones.add(i);
 		}
-		
-		Random rd=new Random();
+
+		Random rd = new Random();
 
 		// Saco 20 posiciones sin repetir del array y les coloco una mina en el
 		// tablero:
-		
+
 		for (int i = 0; i < 20; i++) {
-			
+			int pos = posiciones.get(rd.nextInt(posiciones.size()));
+			int x = pos / 10;
+			int y = pos % 10;
+			if (pos == 0) {
+				x = 0;
+				y = 0;
+			}
+			tablero[x][y] = MINA;
+			posiciones.remove(posiciones.indexOf(pos));
 		}
 
 		// Calculo para todas las posiciones que no tienen minas, cuántas minas
 		// hay alrededor.
-
+		for (int i = 0; i < tablero.length; i++) {
+			for (int j = 0; j < tablero[i].length; j++) {
+				if (tablero[i][j] != MINA) {
+					tablero[i][j] = calculoMinasAdjuntas(i, j);
+				}
+			}
+		}
 		// Pongo la puntuación a cero:
-
+		puntuacion = 0;
+		depurarTablero();
 	}
 
 	/**
@@ -81,8 +95,23 @@ public class ControlJuego {
 	 *            posición horizontalmente de la casilla a rellenar
 	 * @return : El número de minas que hay alrededor de la casilla [i][j]
 	 */
-	private int calculoMinasAdjuntas(int i, int j) {
+	private int calculoMinasAdjuntas(int x, int y) {
+		int suma = 0;
 
+		for (int i = x - 1; i <= x + 1; i++) {
+			for (int j = y - 1; j <= y + 1; j++) {
+				if ((i >= 0) && (j >= 0)) {
+					if ((i <= (LADO_TABLERO - 1)) && (j <= (LADO_TABLERO - 1))) {
+						if (tablero[i][j] == MINA) {
+							suma++;
+						}
+					}
+				}
+
+			}
+		}
+
+		return suma;
 	}
 
 	/**
@@ -108,6 +137,7 @@ public class ControlJuego {
 	 *         minas.
 	 **/
 	public boolean esFinJuego() {
+
 	}
 
 	/**
