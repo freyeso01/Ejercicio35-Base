@@ -15,6 +15,7 @@ public class ControlJuego {
 	private final static int MINA = -1;
 	final int MINAS_INICIALES = 20;
 	final int LADO_TABLERO = 10;
+
 	private int[][] tablero;
 	private int puntuacion;
 
@@ -61,10 +62,9 @@ public class ControlJuego {
 			int pos = posiciones.get(rd.nextInt(posiciones.size()));
 			int x = pos / 10;
 			int y = pos % 10;
-			if (pos == 0) {
-				x = 0;
-				y = 0;
-			}
+			/*
+			 * if (pos == 0) { x = 0; y = 0; }
+			 */
 			tablero[x][y] = MINA;
 			posiciones.remove(posiciones.indexOf(pos));
 		}
@@ -126,7 +126,11 @@ public class ControlJuego {
 	 * @return : Verdadero si no ha explotado una mina. Falso en caso contrario.
 	 */
 	public boolean abrirCasilla(int i, int j) {
-
+		if (tablero[i][j] == MINA) {
+			return false;
+		}
+		puntuacion++;
+		return true;
 	}
 
 	/**
@@ -137,7 +141,7 @@ public class ControlJuego {
 	 *         minas.
 	 **/
 	public boolean esFinJuego() {
-
+		return puntuacion == (LADO_TABLERO * LADO_TABLERO) - MINAS_INICIALES;
 	}
 
 	/**
@@ -169,6 +173,7 @@ public class ControlJuego {
 	 *         celda
 	 */
 	public int getMinasAlrededor(int i, int j) {
+		return tablero[i][j];
 	}
 
 	/**
@@ -177,6 +182,7 @@ public class ControlJuego {
 	 * @return Un entero con la puntuación actual
 	 */
 	public int getPuntuacion() {
+		return puntuacion;
 	}
 
 }
