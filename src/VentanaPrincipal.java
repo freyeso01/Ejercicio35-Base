@@ -142,6 +142,17 @@ public class VentanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				juego.inicializarPartida();
 
+				for (int i = 0; i < botonesJuego.length; i++) {
+					for (int j = 0; j < botonesJuego[i].length; j++) {
+						panelesJuego[i][j].removeAll();
+						panelesJuego[i][j].add(botonesJuego[i][j]);
+						botonesJuego[i][j].setEnabled(true);
+
+					}
+
+				}
+				actualizarPuntuacion();
+				refrescarPantalla();
 			}
 		});
 
@@ -186,14 +197,25 @@ public class VentanaPrincipal {
 	 *       juego.
 	 */
 	public void mostrarFinJuego(boolean porExplosion) {
-		// TODO
+		if (porExplosion) {
+			JOptionPane.showMessageDialog(ventana, "Has perdido", "Ha explotado una mina!", JOptionPane.ERROR_MESSAGE);
+
+		}
+	}
+
+	public void deshabilitarBotones() {
+		for (int i = 0; i < botonesJuego.length; i++) {
+			for (int j = 0; j < botonesJuego[i].length; j++) {
+				botonesJuego[i][j].setEnabled(false);
+			}
+		}
 	}
 
 	/**
 	 * Método que muestra la puntuación por pantalla.
 	 */
 	public void actualizarPuntuacion() {
-		// TODO
+		pantallaPuntuacion.setText(Integer.toString(juego.getPuntuacion()));
 	}
 
 	/**

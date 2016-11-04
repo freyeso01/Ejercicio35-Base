@@ -1,6 +1,8 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 /**
  * Clase que implementa el listener de los botones del Buscaminas. De alguna
  * manera tendrá que poder acceder a la ventana principal. Se puede lograr
@@ -28,14 +30,19 @@ public class ActionBoton implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(juego.abrirCasilla(i, j)){
+		if (juego.abrirCasilla(i, j)) {
 			ventana.mostrarNumMinasAlrededor(i, j);
+			ventana.actualizarPuntuacion();
 		}
-		if(juego.esFinJuego()){
-			
+		if (juego.esFinJuego()) {
+			JOptionPane.showMessageDialog(ventana.ventana, "Has completado el nivel", "Fin del juego", JOptionPane.INFORMATION_MESSAGE);
+			ventana.deshabilitarBotones();
 		}
-		
-		
+		if (juego.getMinasAlrededor(i, j) == -1) {
+			ventana.mostrarFinJuego(true);
+			ventana.deshabilitarBotones();
+		}
+
 	}
 
 }

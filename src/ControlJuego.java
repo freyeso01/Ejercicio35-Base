@@ -62,9 +62,6 @@ public class ControlJuego {
 			int pos = posiciones.get(rd.nextInt(posiciones.size()));
 			int x = pos / 10;
 			int y = pos % 10;
-			/*
-			 * if (pos == 0) { x = 0; y = 0; }
-			 */
 			tablero[x][y] = MINA;
 			posiciones.remove(posiciones.indexOf(pos));
 		}
